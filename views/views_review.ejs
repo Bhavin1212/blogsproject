@@ -1,0 +1,102 @@
+<%- include('header') %>
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive table--no-card m-b-30">
+                            <form class="form-header">
+                                <input class="au-input au-input--xl" type="text" name="search"
+                                    placeholder="Search for datas &amp; reports..." />
+                                <button class="au-btn--submit" type="submit" name="searching">
+                                    <i class="zmdi zmdi-search"></i>
+                                </button>
+                            </form>
+                            <form action="/review/mulDel" method="post">
+                                <table class="table table-borderless table-striped table-earning first text-left ">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input type="checkbox" id="multidelet">
+                                                <input type="submit" value="delet">
+                                            </th>
+                                            <th>Name</th>
+                                            <th>City</th>
+                                            <th>Country</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th>Operation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbrey>
+                                        <% for(var re of reviewdata) {%>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" name="mulDel[]" class="singleDelet"
+                                                        value="<%= re.id %>">
+                                                </td>
+                                                <td>
+                                                <td>
+                                                    <%= re.name %>
+                                                </td>
+                                                <td>
+                                                    <%= re.city %>
+                                                </td>
+                                                <td>
+                                                    <%= re.country %>
+                                                </td>
+                                                <td>
+                                                    <%= re.content %>
+                                                </td>
+                                                <td>
+                                                    <% if(re.isActive) {%>
+                                                        <a
+                                                            href="?id=<%= re.id %>&status=deActive&search=<%= search %>&page=<%= cpage %>">Active</a>
+                                                        <% } else { %>
+                                                            <a
+                                                                href="?id=<%= re.id %>&status=Active&search=<%= search %>&page=<%= cpage %>">Deactive</a>
+                                                            <% } %>
+                                                </td>
+                                                <td><a href="/review/deleterecord/<%= re.id %>">Delete</a> ||
+                                                    <a href="/review/updaterecord/?id=<%= re.id %>">Update</a>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                                <tr>
+                                                    <td>
+                                                        <nav aria-label="Page navigation example">
+                                                            <ul class="pagination">
+                                                                <% var parpagrecords=cpage %>
+                                                                    <% var pre=--parpagrecords %>
+                                                                        <% if(pre>0) { %>
+                                                                            <li class="page-item"><a class="page-link"
+                                                                                    href="?page=<%= pre%>&search=<%= search %>">Previous</a>
+                                                                            </li>
+                                                                            <% } %>
+                                                                                <li class="page-item"><a
+                                                                                        class="page-link"
+                                                                                        href="<%= cpage%>&search=<%= search %>">
+                                                                                        <%=cpage%>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <% var next=++cpage %>
+                                                                                    <% if(cpage<=PageData){ %>
+                                                                                        <li class="page-item"><a
+                                                                                                class="page-link"
+                                                                                                href="?page=<%= next %>&search=<%= search %>">Next</a>
+                                                                                        </li>
+                                                                                        <% } %>
+                                                            </ul>
+                                                        </nav>
+                                                    </td>
+                                                </tr>
+                                    </tbrey>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('footer') %>

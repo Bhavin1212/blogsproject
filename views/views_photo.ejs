@@ -1,0 +1,92 @@
+<%- include('header') %>
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive table--no-card m-b-30">
+                            <form class="form-header">
+                                <input class="au-input au-input--xl" type="text" name="search"
+                                    placeholder="Search for datas &amp; reports..." />
+                                <button class="au-btn--submit" type="submit" name="searching">
+                                    <i class="zmdi zmdi-search"></i>
+                                </button>
+                            </form>
+                            <form action="/photo/mulDel" method="post">
+                                <table class="table table-borderless table-striped table-earning">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input type="checkbox" id="multidelet">
+                                                <input type="submit" value="delet">
+                                            </th>
+                                            <th>image</th>
+                                            <th>Title</th>
+                                            <th>content</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbsdy>
+                                        <% for(var po of photorecords){ %>
+                                            <tr>
+                                                <td><input type="checkbox" name="mulDel[]" class="singleDelet"
+                                                        value="<%= po.id %>"></td>
+                                                <td>
+                                                    <img src="<%= po.image %>" height="100" width="100">
+                                                </td>
+                                                <td>
+                                                    <%= po.title %>
+                                                </td>
+                                                <td>
+                                                    <%= po.content %>
+                                                </td>
+                                                <td>
+                                                    <% if(po.isActive) {%>
+                                                        <a
+                                                            href="?id=<%= po.id %>&status=deActive&search=<%= search %>&page=<%= cpage %>">Active</a>
+                                                        <% } else { %>
+                                                            <a
+                                                                href="?id=<%= po.id %>&status=Active&search=<%= search %>&page=<%= cpage %>">Deactive</a>
+                                                            <% } %>
+                                                </td>
+                                                <td><a href="/photo/deleterecord/<%= po.id %>">Delete</a> ||
+                                                    <a href="/photo/updaterecord/?id=<%= po.id %>">Update</a>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                                <tr>
+                                                    <td>
+                                                        <nav aria-label="Page navigation example">
+                                                            <ul class="pagination">
+                                                                <% var parpagrecords=cpage %>
+                                                                <% var pre=--parpagrecords %>
+                                                                    <% if(pre>0) { %>
+                                                                        <li class="page-item"><a class="page-link"
+                                                                                href="?page=<%= pre%>&search=<%= search %>">Previous</a>
+                                                                        </li>
+                                                                        <% } %>
+                                                                            <li class="page-item"><a
+                                                                                    class="page-link"
+                                                                                    href="<%= cpage%>&search=<%= search %>">
+                                                                                    <%=cpage%>
+                                                                                </a>
+                                                                            </li>
+                                                                            <% var next=++cpage %>
+                                                                                <% if(cpage<=PageData){ %>
+                                                                                    <li class="page-item"><a
+                                                                                            class="page-link"
+                                                                                            href="?page=<%= next %>&search=<%= search %>">Next</a>
+                                                                                    </li>
+                                                                                    <% } %>
+                                                            </ul>
+                                                        </nav>
+                                                    </td>
+                                                </tr>
+                                    </tbsdy>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <%- include('footer') %>
